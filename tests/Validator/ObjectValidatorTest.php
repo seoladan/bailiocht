@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Seoladan\Bailiocht\Tests\Validator;
 
+use Exception;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Seoladan\Bailiocht\Exception\ConfigurationException;
-use Seoladan\Bailiocht\Exception\Exception;
+use Seoladan\Bailiocht\Exception\Exception as BailiochtException;
 use Seoladan\Bailiocht\Exception\ValidationException;
+use Seoladan\Bailiocht\Rule\DateAfter;
 use Seoladan\Bailiocht\Rule\Factory\RuleFactory;
 use Seoladan\Bailiocht\Rule\NotEmpty;
 use Seoladan\Bailiocht\Rule\NoValidate;
@@ -18,6 +22,8 @@ use Seoladan\Bailiocht\Rule\NumberGreaterThan;
 use Seoladan\Bailiocht\Validator\Exception\ValidatorException;
 use Seoladan\Bailiocht\Validator\ObjectValidator;
 use Seoladan\Bailiocht\Validator\ValueValidator;
+use Seoladan\DateTime\Now;
+use Seoladan\DateTime\Parser;
 
 #[CoversClass(ObjectValidator::class)]
 class ObjectValidatorTest extends TestCase
@@ -30,6 +36,9 @@ class ObjectValidatorTest extends TestCase
             ],
             [
                 self::createTestObject('John Doe', 15),
+            ],
+            [
+                self::createTestObject('John Doe', 15, new \DateTimeImmutable('2026-01-01')),
             ],
             [
                 new #[NoValidate] class('John Doe')  {
@@ -51,7 +60,7 @@ class ObjectValidatorTest extends TestCase
 
     #[DataProvider('validateObjectPassesProvider')]
     public function testValidateObjectPasses(object $object): void {
-        $validator = new ObjectValidator(new ValueValidator(), new RuleFactory());
+        $validator = $this->getObjectValidator();
 
         $this->assertSame($object, $validator->validateObject($object));
     }
@@ -68,12 +77,12 @@ class ObjectValidatorTest extends TestCase
 
     #[DataProvider('validateObjectFailsProvider')]
     public function testValidateObjectFails(object $object, int $expectedExceptions) {
-        $validator = new ObjectValidator(new ValueValidator(), new RuleFactory());
+        $validator = $this->getObjectValidator();
 
         try {
             $validator->validateObject($object);
             $this->fail();
-        } catch (Exception $e) {
+        } catch (BailiochtException $e) {
             $this->assertInstanceOf(ValidationException::class, $e);
             $this->assertInstanceOf(ValidatorException::class, $e);
             $this->assertCount($expectedExceptions, $e->getValidationRuleExceptions());
@@ -89,26 +98,73 @@ class ObjectValidatorTest extends TestCase
             ) {}
         };
 
-        $validator = new ObjectValidator(new ValueValidator(), new RuleFactory());
+        $validator = $this->getObjectValidator();
 
         try {
             $validator->validateObject($object);
             $this->fail();
-        } catch (Exception $e) {
+        } catch (BailiochtException $e) {
             $this->assertInstanceOf(ConfigurationException::class, $e);
             $this->assertInstanceOf(ValidatorException::class, $e);
             $this->assertCount(1, $e->getValidationRuleExceptions());
         }
     }
 
-    private static function createTestObject(string $name, ?int $age = null): object {
-        return new class($name, $age)  {
+    private static function createTestObject(string $name, ?int $age = null, ?\DateTimeImmutable $date = null): object {
+        return new class($name, $age, $date)  {
             public function __construct(
                 #[NotEmpty]
                 public string $name,
                 #[NumberGreaterThan(0)]
                 public ?int $age,
+                #[DateAfter(new \DateTimeImmutable('2025-01-01'))]
+                public ?\DateTimeImmutable $date,
             ) {}
         };
+    }
+
+    protected function getObjectValidator(bool $withContainer = true): ObjectValidator
+    {
+        $container = null;
+
+        if ($withContainer) {
+            $now = new Now(new \DateTimeImmutable('2025-01-01'));
+
+            $container = new class($now, new Parser($now)) implements ContainerInterface
+            {
+                protected Now $now;
+                protected Parser $dateParser;
+
+                public function __construct(Now $now, Parser $dateParser) {
+                    $this->now = $now;
+                    $this->dateParser = $dateParser;
+                }
+
+                /**
+                 * @inheritDoc
+                 */
+                public function get(string $id)
+                {
+                    return match ($id) {
+                        Now::class => $this->now,
+                        Parser::class => $this->dateParser,
+                        default => throw new class extends Exception implements NotFoundExceptionInterface {}
+                    };
+                }
+
+                /**
+                 * @inheritDoc
+                 */
+                public function has(string $id): bool
+                {
+                    return match ($id) {
+                        Now::class, Parser::class => true,
+                        default => false,
+                    };
+                }
+            };
+        }
+
+        return new ObjectValidator(new ValueValidator(), new RuleFactory($container));
     }
 }

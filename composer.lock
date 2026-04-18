@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25639d9977ab8938e29bcfc37aa45abb",
+    "content-hash": "dd68fa9c73fe850c8468153dce9398ea",
     "packages": [
         {
             "name": "psr/container",
@@ -58,6 +58,89 @@
                 "source": "https://github.com/php-fig/container/tree/2.0.2"
             },
             "time": "2021-11-05T16:47:00+00:00"
+        },
+        {
+            "name": "seoladan/datetime",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/seoladan/datetime.git",
+                "reference": "9d653fa9a27277c94e2bc03c3b6a5f662d7eb227"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/seoladan/datetime/zipball/9d653fa9a27277c94e2bc03c3b6a5f662d7eb227",
+                "reference": "9d653fa9a27277c94e2bc03c3b6a5f662d7eb227",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "brainmaestro/composer-git-hooks": "^3.0",
+                "marcocesarato/php-conventional-changelog": "^1.17",
+                "phpunit/phpunit": "^11.5.0",
+                "symfony/console": "^7"
+            },
+            "type": "library",
+            "extra": {
+                "hooks": {
+                    "pre-commit": [
+                        "composer validate --no-check-version"
+                    ],
+                    "pre-push": [
+                        "composer test"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Seoladan\\DateTime\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Seoladan\\DateTime\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "changelog": [
+                    "vendor/bin/conventional-changelog"
+                ],
+                "release": [
+                    "vendor/bin/conventional-changelog --commit"
+                ],
+                "release:patch": [
+                    "vendor/bin/conventional-changelog --commit --patch"
+                ],
+                "release:minor": [
+                    "vendor/bin/conventional-changelog --commit --minor"
+                ],
+                "release:major": [
+                    "vendor/bin/conventional-changelog --commit --major"
+                ],
+                "hooks": [
+                    "vendor/bin/cghooks"
+                ],
+                "test": [
+                    "vendor/bin/phpunit"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sean Ellingham",
+                    "email": "sean@terrestris.co.uk"
+                }
+            ],
+            "description": "DateTime library for Seoladán",
+            "support": {
+                "source": "https://github.com/seoladan/datetime/tree/v1.1.0",
+                "issues": "https://github.com/seoladan/datetime/issues"
+            },
+            "time": "2026-04-19T17:26:41+00:00"
         }
     ],
     "packages-dev": [

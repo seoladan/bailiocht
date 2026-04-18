@@ -13,7 +13,8 @@
     ],
     "require": {
         "php": ">=8.2",
-        "psr/container": "^2.0"
+        "psr/container": "^2.0",
+        "seoladan/datetime": "^1.1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5.0",
@@ -49,5 +50,11 @@
                 "composer test"
             ]
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/seoladan/datetime"
+        }
+    ]
 }

@@ -92,8 +92,11 @@ abstract class ValueRuleTestCase extends TestCase
     }
 
     #[DataProvider('valueWithInvalidConfigProvider')]
-    public function testValidateValueWithInvalidConfig(array $validatorParams, mixed $value, ?string $exceptionMessage = null): void
-    {
+    public function testValidateValueWithInvalidConfig(
+        array $validatorParams,
+        mixed $value,
+        ?string $exceptionMessage = null
+    ): void {
         if (!static::$canHaveInvalidConfig) {
             $this->expectNotToPerformAssertions();
             return;
