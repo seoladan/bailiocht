@@ -13,6 +13,7 @@ use Seoladan\Bailiocht\Rule\Exception\ValueRuleException;
 use Seoladan\Bailiocht\Rule\Factory\RuleFactory;
 use Seoladan\Bailiocht\Rule\NoValidate;
 use Seoladan\Bailiocht\Rule\ValueRule;
+use Seoladan\Bailiocht\Utility\GetAttributeTrait;
 use Seoladan\Bailiocht\Validator\Exception\InvalidObjectException;
 use Seoladan\Bailiocht\Validator\Exception\InvalidPropertyException;
 use Seoladan\Bailiocht\Validator\Exception\InvalidValueException;
@@ -22,6 +23,8 @@ use Seoladan\Bailiocht\Validator\Exception\ValidatorConfigurationException;
 
 class ObjectValidator
 {
+    use GetAttributeTrait;
+
     public function __construct(
         protected ValueValidator $valueValidator,
         protected RuleFactory $ruleFactory,
@@ -115,20 +118,5 @@ class ObjectValidator
             $this->ruleFactory->createRuleFromAttribute(...),
             $property->getAttributes(ValueRule::class, ReflectionAttribute::IS_INSTANCEOF)
         );
-    }
-
-    /**
-     * @template Attribute of object
-     * @param ReflectionProperty|ReflectionClass $reflect
-     * @param class-string<Attribute> $attribute
-     * @return ?Attribute
-     */
-    protected function getAttribute(ReflectionProperty|ReflectionClass $reflect, string $attribute): ?object
-    {
-        if ($reflect->getAttributes($attribute)) {
-            return $reflect->getAttributes($attribute)[0]->newInstance();
-        }
-
-        return null;
     }
 }
