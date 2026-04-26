@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Seoladan\Bailiocht\Rule\Metadata;
+namespace Seoladan\Riail\Metadata;
 
 use Attribute;
 

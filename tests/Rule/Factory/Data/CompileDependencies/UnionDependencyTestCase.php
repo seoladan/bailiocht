@@ -2,9 +2,9 @@
 
 namespace Seoladan\Bailiocht\Tests\Rule\Factory\Data\CompileDependencies;
 
-use Seoladan\Bailiocht\Rule\Metadata\OptionalDependency;
-use Seoladan\Bailiocht\Rule\Metadata\RequiredDependency;
 use Seoladan\Bailiocht\Rule\ValidationRule;
+use Seoladan\Riail\Metadata\OptionalDependency;
+use Seoladan\Riail\Metadata\RequiredDependency;
 
 class UnionDependencyTestCase implements ValidationRule
 {

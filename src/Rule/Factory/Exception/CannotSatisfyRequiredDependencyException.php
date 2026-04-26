@@ -6,7 +6,7 @@ namespace Seoladan\Bailiocht\Rule\Factory\Exception;
 
 use ReflectionParameter;
 use RuntimeException;
-use Seoladan\Bailiocht\Rule\Metadata\Dependency;
+use Seoladan\Riail\Metadata\Dependency;
 use Throwable;
 
 class CannotSatisfyRequiredDependencyException extends RuntimeException implements DependencyException {

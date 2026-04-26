@@ -3,7 +3,7 @@
 namespace Seoladan\Bailiocht\Rule\Factory\Exception;
 
 use ReflectionParameter;
-use Seoladan\Bailiocht\Rule\Metadata\Dependency;
+use Seoladan\Riail\Metadata\Dependency;
 
 interface DependencyException extends FactoryException
 {

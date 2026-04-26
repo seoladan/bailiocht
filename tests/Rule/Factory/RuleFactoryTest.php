@@ -230,7 +230,7 @@ class RuleFactoryTest extends TestCase
                 RuleFactory::class,
                 null,
                 ClassDoesNotImplementValidationRule::class,
-                '"RuleFactory" is not a validation rule',
+                '"RuleFactory" is not a "ValidationRule"',
             ],
             [
                 UnspecifiedDependenciesTestCase::class,

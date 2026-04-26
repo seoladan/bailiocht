@@ -9,11 +9,11 @@ use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Seoladan\Bailiocht\Rule\Exception\ValueRuleValidationException;
-use Seoladan\Bailiocht\Rule\Metadata\OptionalDependency;
 use Seoladan\DateTime\DateRoundingMode;
 use Seoladan\DateTime\DateRoundingUnit;
 use Seoladan\DateTime\Now;
 use Seoladan\DateTime\Parser as DateParser;
+use Seoladan\Riail\Metadata\OptionalDependency;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
 readonly class DateOnOrAfter implements ValueRule
