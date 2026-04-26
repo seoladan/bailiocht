@@ -4,6 +4,12 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [1.0.1](https://github.com/seoladan/bailiocht/compare/v1.0.0...v1.0.1) (2026-04-26)
+
+Refactoring
+
+---
+
 ## [1.0.0](https://github.com/seoladan/bailiocht/compare/a60bec3ee7d9459d9883fcadec9b9ad242ee1f5e...v1.0.0) (2026-04-19)
 
 ### Features
@@ -20,4 +26,3 @@ All notable changes to this project will be documented in this file.
 
 
 ---
-
