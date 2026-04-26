@@ -13,13 +13,13 @@ use Seoladan\Bailiocht\Rule\Exception\ValueRuleException;
 use Seoladan\Bailiocht\Rule\Factory\RuleFactory;
 use Seoladan\Bailiocht\Rule\NoValidate;
 use Seoladan\Bailiocht\Rule\ValueRule;
-use Seoladan\Bailiocht\Utility\GetAttributeTrait;
 use Seoladan\Bailiocht\Validator\Exception\InvalidObjectException;
 use Seoladan\Bailiocht\Validator\Exception\InvalidPropertyException;
 use Seoladan\Bailiocht\Validator\Exception\InvalidValueException;
 use Seoladan\Bailiocht\Validator\Exception\PropertyException;
 use Seoladan\Bailiocht\Validator\Exception\UnintializedPropertyException;
 use Seoladan\Bailiocht\Validator\Exception\ValidatorConfigurationException;
+use Seoladan\Riail\Utility\GetAttributeTrait;
 
 class ObjectValidator
 {
