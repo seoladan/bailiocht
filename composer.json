@@ -53,8 +53,8 @@
     },
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/seoladan/datetime"
+            "type": "composer",
+            "url": "https://satis.seoladan.dev"
         }
     ]
 }
